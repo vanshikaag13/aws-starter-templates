@@ -32,13 +32,25 @@ resource "aws_elb" "alb" {
     interval            = 30
   }
 
-  instances                   = [aws_instance.foo.id]
+  instances                   = [aws_instance.ec2_ecs_cluster.id]
   cross_zone_load_balancing   = true
   idle_timeout                = 400
   connection_draining         = true
   connection_draining_timeout = 400
 
   tags = {
-    Name = "foobar-terraform-elb"
+    Name = "test-terraform-elb"
   }
+}
+resource "aws_lb_target_group" "lb_tg" {
+  name        = "tf-lb-tg"
+  port        = 80
+  protocol    = "HTTP"
+  target_type = "ip"
+  vpc_id      = aws_vpc.default_vpc.id
+}
+resource "aws_lb_target_group_attachment" "lb_tg_attachment" {
+  target_group_arn = aws_lb_target_group.lb_tg.arn
+  target_id        = aws_instance.ec2_ecs_cluster.id
+  port             = 80
 }
