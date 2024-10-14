@@ -1,11 +1,11 @@
 # Create a new load balancer
 resource "aws_elb" "alb" {
-  name               = "example_alb"
+  name               = "tf_alb"
   availability_zones = ["us-west-2a", "us-west-2b", "us-west-2c"]
 
   access_logs {
-    bucket        = "foo"
-    bucket_prefix = "bar"
+    bucket        = "tf_alb_logs"
+    bucket_prefix = "bucket"
     interval      = 60
   }
 

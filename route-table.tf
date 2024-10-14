@@ -1,4 +1,4 @@
-variable "vpc_id" {}
+
 resource "aws_default_route_table" "public_route_table" {
   default_route_table_id = aws_vpc.public_route_table.default_route_table_id
 
