@@ -1,5 +1,5 @@
-resource "aws_ecs_task_definition" "pseudo_task" {
-  family = "pseudo service"
+resource "aws_ecs_task_definition" "tf_task" {
+  family = "tf-ecs"
   container_definitions = jsonencode([
     {
       name      = "first"
