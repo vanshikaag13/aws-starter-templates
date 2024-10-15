@@ -1,11 +1,12 @@
 resource "aws_db_instance" "psql_tf_rds" {
   cluster_identifier      = "tf_rds"
-  engine                  = "postgresql"
-  engine_version     = "14.12"
+  engine                  = jsondecode(aws_secretsmanager_secret_version.db_creds_version.secret_string)["engine"]
+  engine_version          = "14.12"
   availability_zones      = [aws_subnet.private_subnet_1.id] 
-  database_name           = "test_db"
-  master_username         = "tf_user"
-  master_password         = random_password.password.result
+  database_name           = jsondecode(aws_secretsmanager_secret_version.db_creds_version.secret_string)["database"]
+  master_username         = jsondecode(aws_secretsmanager_secret_version.db_creds_version.secret_string)["username"]
+  master_password         = jsondecode(aws_secretsmanager_secret_version.db_creds_version.secret_string)["password"]
+  port                    = jsondecode(aws_secretsmanager_secret_version.db_creds_version.secret_string)["port"]
   backup_retention_period = 7
   allocated_storage = 15
   multi_az               = false
@@ -17,11 +18,5 @@ resource "random_password" "password" {
   override_special = "())-_=+[]{}<>:?"
 }
 
-resource "aws_db_subnet_group" "pvt_subnet" {
-  name       = "tf-subnet-group"
-  subnet_ids = [aws_subnet.private_subnet_1.id, aws_subnet.private_subnet_2.id, aws_subnet.private_subnet_3.id]
-  tags = {
-    Name = "My DB subnet group"
-  }
-}
+
 
