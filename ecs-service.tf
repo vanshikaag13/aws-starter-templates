@@ -1,9 +1,9 @@
 variable taskcount{}
-resource "aws_ecs_service" "pseudo_service" {
-  name            = "Pseudo Service"
-  launch_type = "EC2"
-  cluster         = aws_ecs_cluster.pseudo_cluster.id
-  task_definition = aws_ecs_task_definition.pseudo_task.arn
+resource "aws_ecs_service" "tf_service" {
+  name            = "tf-service"
+  launch_type     = "EC2"
+  cluster         = aws_ecs_cluster.tf_ecs_cluster.id
+  task_definition = aws_ecs_task_definition.tf_task.arn
   desired_count   = var.taskcount
   force_new_deployment = true
   iam_role        = aws_iam_role.ecs_instance_role.arn
