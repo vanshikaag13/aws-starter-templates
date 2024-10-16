@@ -7,5 +7,5 @@ resource "aws_elasticache_cluster" "cache" {
   engine_version       = "3.2.10"
   port                 = 6379
   az_mode              = "single-az"
-  security_groups_ids  = aws_ecs_sg.redis_sg.id
+  security_groups_ids  = aws_security_group.redis_sg.id
 }
