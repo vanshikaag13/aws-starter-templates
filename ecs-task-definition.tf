@@ -27,6 +27,6 @@ resource "aws_ecs_task_definition" "tf_task" {
         }
       ]
     }
-  ]
+  ])
 
 }
